@@ -26,7 +26,7 @@ public class ComputerController {
     InformService informService;
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public Iterable<Computer> listAllComputers() {
         log.info("Inside ComputerController :" + " listAllComputers");
         return computerService.getAllComputers();
@@ -34,7 +34,7 @@ public class ComputerController {
     }
 
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @PostMapping("/")
     public ResponseEntity<Computer> createComputer(@Valid @RequestBody Computer computer) {
         log.info("Inside ComputerController :" + " createComputer");
 
@@ -44,7 +44,7 @@ public class ComputerController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public Computer getComputerById(@PathVariable(value = "id") long id) {
         log.info("Inside ComputerController :" + " getComputerById");
         Optional<Computer> computer = computerService.getComputer(id);
@@ -53,19 +53,19 @@ public class ComputerController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping("/{id}")
     public Computer updateComputer(@PathVariable(value = "id") long id, @Valid @RequestBody Computer computer) {
         log.info("Inside ComputerController :" + " updateComputer");
         return computerService.updateComputer(id, computer);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     public void deleteComputer(@PathVariable(value = "id") Long id) {
         log.info("Inside ComputerController :" + " deleteComputer");
         computerService.deleteComputer(id);
     }
 
-    @RequestMapping(value = "/available", method = RequestMethod.GET)
+    @GetMapping("/available")
     public Collection<Computer> availableComputers() {
         log.info("Inside ComputerController :" + " availableComputers");
         return computerService.getAvailableComputers();
