@@ -5,6 +5,7 @@ import com.greenbone.task.samplecompany.exception.ComputerNotFoundException;
 import com.greenbone.task.samplecompany.service.ComputerService;
 import com.greenbone.task.samplecompany.service.InformService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +70,12 @@ public class ComputerController {
     public Collection<Computer> availableComputers() {
         log.info("Inside ComputerController :" + " availableComputers");
         return computerService.getAvailableComputers();
+    }
+
+    @GetMapping("/assigned/{employee}")
+    public Collection<Computer> assignedComputersToEmployee(@NotNull  @PathVariable(value = "employee") String employee) {
+        log.info("Inside ComputerController :" + " assignedComputers");
+        return computerService.getAssignedComputersToEmployee(employee);
     }
 
 

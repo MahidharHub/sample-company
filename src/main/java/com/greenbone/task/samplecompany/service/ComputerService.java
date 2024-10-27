@@ -21,6 +21,8 @@ public interface ComputerService {
 
     Collection<Computer> getAvailableComputers();
 
+    Collection<Computer> getAssignedComputersToEmployee(String employee);
+
 
 
 }

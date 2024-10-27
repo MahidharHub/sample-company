@@ -32,6 +32,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(AssignedComputersNotFoundException.class)
+    public final ResponseEntity<Object> handleAssignedComputersNotFoundExceptions(AssignedComputersNotFoundException ex, WebRequest request) {
+
+        ExceptionResponse exceptionResponse  =
+                new ExceptionResponse(new Date(),ex.getMessage(),request.getDescription(false) + "  not found");
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AvailableComputersNotFoundException.class)
+    public final ResponseEntity<Object> handleAvailableComputersNotFoundExceptions(AvailableComputersNotFoundException ex, WebRequest request) {
+
+        ExceptionResponse exceptionResponse  =
+                new ExceptionResponse(new Date(),ex.getMessage(),request.getDescription(false) + "  not found");
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(InvalidEmployeeException.class)
     public final ResponseEntity<Object> handleInvalidEmployeeExceptions(InvalidEmployeeException ex, WebRequest request) {
 

@@ -1,6 +1,8 @@
 package com.greenbone.task.samplecompany.service;
 
 import com.greenbone.task.samplecompany.domain.Computer;
+import com.greenbone.task.samplecompany.exception.AssignedComputersNotFoundException;
+import com.greenbone.task.samplecompany.exception.AvailableComputersNotFoundException;
 import com.greenbone.task.samplecompany.exception.InvalidEmployeeException;
 import com.greenbone.task.samplecompany.repository.ComputerRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -78,7 +80,19 @@ public class ComputerServiceImpl implements ComputerService{
 
     @Override
     public Collection<Computer> getAvailableComputers() {
-        return repository.findAllAvailableComputers();
+        Collection<Computer> computerCollection = repository.findAllAvailableComputers();
+        if(computerCollection.isEmpty())
+            throw new AvailableComputersNotFoundException("No available computers  " );
+        return computerCollection;
+    }
+
+    @Override
+    public Collection<Computer> getAssignedComputersToEmployee(String employee) {
+        Collection<Computer> computerCollection = repository.findAllComputersAssignedToEmployee(employee);
+        if(computerCollection.isEmpty())
+            throw new AssignedComputersNotFoundException("No assigned computers for employee : " + employee );
+        return computerCollection;
+
     }
 
     /**
