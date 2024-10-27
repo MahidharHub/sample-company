@@ -93,6 +93,9 @@ class ComputerControllerTest {
     void createComputerTest() throws Exception {
 
         Computer computer   = new  Computer(1L, "00-1B-63-84-55-C7","192.168.123.191","","Alllotment 3");
+
+        Mockito.when(
+                computerService.createComputer(computer)).thenReturn(new SupplyComputers().getOneComputerRecord());
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/computers/")
                         .contentType(MediaType.APPLICATION_JSON)
