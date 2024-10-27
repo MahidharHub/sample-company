@@ -60,7 +60,7 @@ public class ComputerServiceImpl implements ComputerService{
     @Override
     public Computer updateComputer(Long id, Computer computer) {
         computer.setId(id);
-        return repository.save(computer);
+        return  repository.save(checkEmployeeValidation(computer));
     }
 
     /**

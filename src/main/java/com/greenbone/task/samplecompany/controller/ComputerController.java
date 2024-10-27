@@ -105,7 +105,9 @@ public class ComputerController {
     @Operation(summary = "Update computer with id")
     public Computer updateComputer(@PathVariable(value = "id") long id, @Valid @RequestBody Computer computer) {
         log.info("Inside ComputerController :" + " updateComputer");
-        return computerService.updateComputer(id, computer);
+        Computer computerUpdated = computerService.updateComputer(id, computer);
+        informService.checkComputersAllottedExceeded(computerUpdated);
+        return computerUpdated;
     }
 
     /**
