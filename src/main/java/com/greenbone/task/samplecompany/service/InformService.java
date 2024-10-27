@@ -1,9 +1,6 @@
 package com.greenbone.task.samplecompany.service;
 
 import com.greenbone.task.samplecompany.domain.Computer;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.List;
 
 public interface InformService {
 

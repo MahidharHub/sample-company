@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import java.util.Collection;
 import java.util.Optional;
 
@@ -36,13 +35,14 @@ public class ComputerController {
 
     /**
      * List all computers from the database
+     *
      * @return
      */
 
     @GetMapping("/")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) })})
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))})})
     @Operation(summary = "List all computers from the database")
     public Iterable<Computer> listAllComputers() {
         log.info("Inside ComputerController :" + " listAllComputers");
@@ -52,35 +52,38 @@ public class ComputerController {
 
     /**
      * Create a new computer in the database
+     *
      * @param computer
      * @return
      */
 
     @PostMapping("/")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) })})
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))})})
     @Operation(summary = "Create a new computer in the database")
     public ResponseEntity<Computer> createComputer(@Valid @RequestBody Computer computer) {
         log.info("Inside ComputerController :" + " createComputer");
 
         Computer computerCreated = computerService.createComputer(computer);
-        informService.checkComputersAllottedExceeded(computerCreated);
+        if(!computerCreated.getEmployee().isBlank())
+            informService.checkComputersAllottedExceeded(computerCreated);
         return ResponseEntity.ok().body(computerCreated);
 
     }
 
     /**
      * Retrieve computer by id
+     *
      * @param id
      * @return
      */
 
     @GetMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) }),
-            @ApiResponse(responseCode = "404",  description = "Resource Not Found",  content = @Content)
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))}),
+            @ApiResponse(responseCode = "404", description = "Resource Not Found", content = @Content)
     })
     @Operation(summary = "Retrieve computer by id")
     public Computer getComputerById(@PathVariable(value = "id") long id) {
@@ -93,32 +96,35 @@ public class ComputerController {
 
     /**
      * Update computer with id
+     *
      * @param id
      * @param computer
      * @return
      */
     @PutMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) })
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))})
     })
     @Operation(summary = "Update computer with id")
     public Computer updateComputer(@PathVariable(value = "id") long id, @Valid @RequestBody Computer computer) {
         log.info("Inside ComputerController :" + " updateComputer");
         Computer computerUpdated = computerService.updateComputer(id, computer);
-        informService.checkComputersAllottedExceeded(computerUpdated);
+        if (!computerUpdated.getEmployee().isBlank())
+            informService.checkComputersAllottedExceeded(computerUpdated);
         return computerUpdated;
     }
 
     /**
      * Delete computer by id
+     *
      * @param id
      */
 
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) })
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))})
     })
     @Operation(summary = "Delete computer with id")
     public void deleteComputer(@PathVariable(value = "id") Long id) {
@@ -129,14 +135,15 @@ public class ComputerController {
 
     /**
      * Get all available free computers
+     *
      * @return
      */
 
     @GetMapping("/available")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) }),
-            @ApiResponse(responseCode = "404",  description = "Resource Not Found",  content = @Content)
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))}),
+            @ApiResponse(responseCode = "404", description = "Resource Not Found", content = @Content)
     })
     @Operation(summary = "Get all available free computers")
     public Collection<Computer> availableComputers() {
@@ -146,22 +153,21 @@ public class ComputerController {
 
     /**
      * Get all assigned computers to a specific employee
-      * @param employee
+     *
+     * @param employee
      * @return
      */
     @GetMapping("/assigned/{employee}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Results are ok", content = { @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Computer.class)) }),
-            @ApiResponse(responseCode = "404",  description = "Resource Not Found",  content = @Content)
+            @ApiResponse(responseCode = "200", description = "Results are ok", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Computer.class))}),
+            @ApiResponse(responseCode = "404", description = "Resource Not Found", content = @Content)
     })
     @Operation(summary = "Get all assigned computers to a specific employee")
-    public Collection<Computer> assignedComputersToEmployee(@NotNull  @PathVariable(value = "employee") String employee) {
+    public Collection<Computer> assignedComputersToEmployee(@NotNull @PathVariable(value = "employee") String employee) {
         log.info("Inside ComputerController :" + " assignedComputers");
         return computerService.getAssignedComputersToEmployee(employee);
     }
-
-
 
 
 }
