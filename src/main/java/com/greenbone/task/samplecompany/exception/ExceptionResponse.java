@@ -2,6 +2,9 @@ package com.greenbone.task.samplecompany.exception;
 
 import java.util.Date;
 
+/**
+ * Exception Response used for providing the exception details
+ */
 public class ExceptionResponse {
 
     private Date timeStamp;

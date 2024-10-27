@@ -118,12 +118,7 @@
 			<artifactId>okhttp</artifactId>
 			<version>4.12.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.openapitools</groupId>
-			<artifactId>openapi-generator-maven-plugin</artifactId>
-			<version>7.9.0</version>
-			<scope>provided</scope>
-		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -167,7 +162,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>mahidhar/${project.artifactId}:1</image>
+						<image>mahidhar/${project.artifactId}:2</image>
 					</to>
 				</configuration>
 			</plugin>

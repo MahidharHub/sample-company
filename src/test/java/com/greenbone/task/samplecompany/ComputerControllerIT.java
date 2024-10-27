@@ -2,7 +2,6 @@ package com.greenbone.task.samplecompany;
 
 
 import com.greenbone.task.samplecompany.domain.Computer;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,12 +11,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import java.io.FileNotFoundException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest(classes = SamplecompanyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = SampleCompanyApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ComputerControllerIT {
 
