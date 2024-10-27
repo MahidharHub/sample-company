@@ -30,7 +30,7 @@ public class ComputerCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        log.info("Inside ComputerCommandLineRunner :: run");
         File file = ResourceUtils.getFile("classpath:computers.csv");
         Path path = file.toPath();
         try (

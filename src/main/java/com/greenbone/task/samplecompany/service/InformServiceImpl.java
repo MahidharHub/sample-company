@@ -38,7 +38,7 @@ public class InformServiceImpl implements InformService {
     @Override
     public boolean informAdmin(Computer computer, int count) {
 
-
+        log.info("Inside InformServiceImpl :: informAdmin");
         webConfig.webClient().post()
                 .uri(greenboneServiceUri)
                 .header(greenboneServiceHeaderLanguageKey, greenboneServiceHeaderLanguageValue)
@@ -57,10 +57,10 @@ public class InformServiceImpl implements InformService {
                             if (error instanceof WebClientResponseException) {
                                 WebClientResponseException ex = (WebClientResponseException) error;
                                 HttpStatusCode status = ex.getStatusCode();
-                               log.info("ComputerRepository : informAdmin() :  Error Status code :" + ex.getStatusCode() + "Error Message :" + ex.getMessage() );
+                               log.info("InformServiceImpl : informAdmin() :  Error Status code :" + ex.getStatusCode() + "Error Message :" + ex.getMessage() );
 
                             } else {
-                                log.info("ComputerRepository : informAdmin() : Inform Service not available:"  + "Error Message :" + error.getMessage() );
+                                log.info("InformServiceImpl : informAdmin() : Inform Service not available:"  + "Error Message :" + error.getMessage() );
 
                             }
                         }
@@ -71,6 +71,7 @@ public class InformServiceImpl implements InformService {
 
     @Override
     public boolean checkComputersAllottedExceeded(Computer computer) {
+        log.info("Inside InformServiceImpl :: checkComputersAllottedExceeded");
         boolean informAdminService = false;
         int count = repository.countByEmployee(computer.getEmployee());
         if (count>=3){
@@ -80,6 +81,7 @@ public class InformServiceImpl implements InformService {
     }
 
     private AdminDTO buildAdmin(Computer computer, int count){
+        log.info("Inside InformServiceImpl :: buildAdmin");
         return  new AdminDTO.AdminBuilder()
                 .setMessage("reached limit of " + count + " computers allotment")
                 .setLevel("warning")

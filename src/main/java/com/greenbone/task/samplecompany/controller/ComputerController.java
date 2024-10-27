@@ -64,7 +64,6 @@ public class ComputerController {
     @Operation(summary = "Create a new computer in the database")
     public ResponseEntity<Computer> createComputer(@Valid @RequestBody Computer computer) {
         log.info("Inside ComputerController :" + " createComputer");
-
         Computer computerCreated = computerService.createComputer(computer);
         if(!computerCreated.getEmployee().isBlank())
             informService.checkComputersAllottedExceeded(computerCreated);
