@@ -16,16 +16,12 @@ You can download the application from this URL
 https://github.com/MahidharHub/sample-company
 * Download the greenbone sample application docker file
 ````
-
 docker pull greenbone/exercise-admin-notification
-
 ````
 
 * Run docker image with this command
 ````
-
 docker run -p 8080:8080 greenbone/exercise-admin-notification:latest
-
 ````
 You can download the sample application microservice from this URL
 https://github.com/MahidharHub/sample-company
