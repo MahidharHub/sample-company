@@ -55,6 +55,7 @@ public class ComputerCommandLineRunner implements CommandLineRunner {
         processCSV(path);
 
         IOUtils.closeQuietly(inputStream);
+        Files.deleteIfExists(targetFile.toPath());
     }
 
 
