@@ -38,6 +38,7 @@ Java -jar target/samplecompany-0.0.1-SNAPSHOT.jar
 
 ### Running in Docker Container
 * Build the docker image with Jib command
+* Please make sure Docker Desktop is running.
 ````
 mvn compile jib:dockerBuild
 ````
