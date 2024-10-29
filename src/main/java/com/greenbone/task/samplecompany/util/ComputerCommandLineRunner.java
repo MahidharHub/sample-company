@@ -7,19 +7,18 @@ import lombok.extern.java.Log;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Component
 @Log
@@ -34,16 +33,32 @@ public class ComputerCommandLineRunner implements CommandLineRunner {
     @Autowired
     InformService informService;
 
+    @Value("${greenbone.csv.path}")
+    private String greenboneCSVPath;
+
+    @Value("${greenbone.csv.temp.path}")
+    private String greenboneCSVTempPath;
+
     @Override
     public void run(String... args) throws Exception {
         log.info("Inside ComputerCommandLineRunner :: run");
-        Resource resource = resourceLoader.getResource("classpath:computers.csv");
+
+        Resource resource = resourceLoader.getResource(greenboneCSVPath);
         InputStream inputStream = resource.getInputStream();
-        File file = new File("c1.csv");
-        FileUtils.copyInputStreamToFile(inputStream, file);
-        Path path = file.toPath();
+        File targetFile = new File(greenboneCSVTempPath);
+        Path path = targetFile.toPath();
+        Files.copy(
+                inputStream,
+                targetFile.toPath(),
+                StandardCopyOption.REPLACE_EXISTING);
+
+        processCSV(path);
+
+        IOUtils.closeQuietly(inputStream);
+    }
 
 
+    private void processCSV(Path path) {
 
         try (
                 Reader reader = Files.newBufferedReader(path);
@@ -57,15 +72,15 @@ public class ComputerCommandLineRunner implements CommandLineRunner {
                 computer.setEmployee(csvRecord.get(3));
                 computer.setDescription(csvRecord.get(4));
                 Computer computerCreated = computerService.createComputer(computer);
-                if(!computerCreated.getEmployee().isBlank())
+                if (!computerCreated.getEmployee().isBlank())
                     informService.checkComputersAllottedExceeded(computerCreated);
 
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 }
+
+
