@@ -45,7 +45,7 @@ mvn compile jib:dockerBuild
 * Docker image will be build
   
 ````
-docker run -p 8085:8085 mahidhar/samplecompany:3
+docker run -p 8085:8085 mahidhar/samplecompany:4
 ````
 * In the application.properties file there is a property
 * greenbone.service.uri=http://host.docker.internal:8080/api/notify
