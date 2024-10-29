@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,9 @@ public class ComputerCommandLineRunner implements CommandLineRunner {
     ResourceLoader resourceLoader;
 
     @Autowired
+    private Environment environment;
+
+    @Autowired
     InformService informService;
 
     @Value("${greenbone.csv.path}")
@@ -39,21 +43,20 @@ public class ComputerCommandLineRunner implements CommandLineRunner {
     @Value("${greenbone.csv.temp.path}")
     private String greenboneCSVTempPath;
 
+    private static final String userDirectory = "user.dir";
+
     @Override
     public void run(String... args) throws Exception {
         log.info("Inside ComputerCommandLineRunner :: run");
-
         Resource resource = resourceLoader.getResource(greenboneCSVPath);
         InputStream inputStream = resource.getInputStream();
-        File targetFile = new File(greenboneCSVTempPath);
+        File targetFile = new File(environment.getProperty(userDirectory) + greenboneCSVTempPath);
         Path path = targetFile.toPath();
         Files.copy(
                 inputStream,
                 targetFile.toPath(),
                 StandardCopyOption.REPLACE_EXISTING);
-
         processCSV(path);
-
         IOUtils.closeQuietly(inputStream);
         Files.deleteIfExists(targetFile.toPath());
     }
