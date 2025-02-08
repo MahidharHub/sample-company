@@ -19,7 +19,7 @@ https://github.com/MahidharHub/sample-company
 docker pull greenbone/exercise-admin-notification
 ````
 
-* Run docker image with this command
+* Run docker image with this commands
 ````
 docker run -p 8080:8080 greenbone/exercise-admin-notification:latest
 ````
